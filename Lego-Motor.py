@@ -3,10 +3,7 @@
 
 import pigpio
 
-
 pi = pigpio.pi()
-
-
 
 #Left
 pi.set_mode(18, pigpio.OUTPUT) # GPIO.setup(18,  GPIO.OUT) PWM
