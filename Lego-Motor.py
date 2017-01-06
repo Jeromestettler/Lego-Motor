@@ -6,62 +6,53 @@
  
 #servo.set_servo(17, 1200)
  
-from RPIO import PWM
-#import RPIO
 
+import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BCM)
 
-#GPIO.setmode(GPIO.BCM)
+##Left
+GPIO.setup(18,  GPIO.OUT)
+GPIO.setup(4,   GPIO.OUT)
+GPIO.setup(17,  GPIO.OUT)
 
-###Left
-#RPIO.setup(18,  RPIO.OUT)
-#RPIO.setup(4,   RPIO.OUT)
-#RPIO.setup(17,  RPIO.OUT)
+##Right
+GPIO.setup(2,   GPIO.OUT)
+GPIO.setup(24,  GPIO.OUT)
+GPIO.setup(28,  GPIO.OUT)
 
-###Right
-#RPIO.setup(2,   RPIO.OUT)
-#RPIO.setup(24,  RPIO.OUT)
-#RPIO.setup(28,  RPIO.OUT)
+p = GPIO.PWM(2,20)
+p = GPIO.PWM(18,20)
 
-#servo = PWM.Servo()
-#servo.set_servo(17, 1200)
+p.start(0)
 
-
-
-#p = GPIO.PWM(2,20)
-#p = GPIO.PWM(18,20)
-
-#p.start(0)
-
-
-#def clockwise():
-    #GPIO.output(4, True)
-    #GPIO.output(17, False)
-    #print("Counter_Clockwise")
-    #GPIO.output(24, True)
-    #GPIO.output(28, False)
-    #print("Counter_Clockwise")
+def clockwise():
+    GPIO.output(4, True)
+    GPIO.output(17, False)
+    GPIO.output(24, True)
+    GPIO.output(28, False)
+    print("Clockwise")
     
-#def counter_clockwise():
-    #GPIO.output(4, False)
-    #GPIO.output(17, True)
-    #print("Counter_Clockwise")
-    #GPIO.output(24, False)
-    #GPIO.output(28, True)
-    #print("Counter_Clockwise")
-#clockwise()
+def counter_clockwise():
+    GPIO.output(4, False)
+    GPIO.output(17, True)
+    GPIO.output(24, False)
+    GPIO.output(28, True)
+    print("Counter_Clockwise")
+    
+    
+clockwise()
  
-#while True:
-    #cmd = raw_input("Command, f/r 0..9, E.g. f5 :")
-    #direction = cmd[0]
-    #if direction == "f":
-        #clockwise()
-        #print("Clockwise")
+while True:
+    cmd = raw_input("Command, f/r 0..9, E.g. f5 :")
+    direction = cmd[0]
+    if direction == "f":
+        clockwise()
         
-    #else: 
-        #counter_clockwise()
+    else: 
+        counter_clockwise()
     
-    #speed = int(cmd[1]) * 11
-    #p.ChangeDutyCycle(speed)
+    speed = int(cmd[1]) * 11
+    p.ChangeDutyCycle(speed)
 
-#GPIO.cleanup()
+GPIO.cleanup()
